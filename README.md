@@ -137,18 +137,18 @@ resource "aws_security_group" "security_group" {
 ...
 ```
 
-__A resource's NAME should be the same as the TYPE minus the provider.__
+__A resource's NAME should describe its purpose and avoid repeating the TYPE or the provider.__
 
 ```
-resource "aws_autoscaling_group" "autoscaling_group" {
+resource "aws_autoscaling_group" "kubernetes_workers" {
 ...
 ```
 
-If there are multiple resources of the same TYPE defined, add a minimalistic identifier to differentiate between the two resources. A blank line should sperate resource definitions contained in the same file.
+The benefit of this approach is that if there are multiple resources of the same TYPE defined, we differentiate between the two resources by their purpose. A blank line should sperate resource definitions contained in the same file.
 
 ```
 # Create Data S3 Bucket
-resource "aws_s3_bucket" "data_s3_bucket" {
+resource "aws_s3_bucket" "data" {
   bucket = "${var.environment_name}-data-${var.aws_region}"
   acl    = "private"
   versioning {
@@ -157,7 +157,7 @@ resource "aws_s3_bucket" "data_s3_bucket" {
 }
 
 # Create Images S3 Bucket
-resource "aws_s3_bucket" "images_s3_bucket" {
+resource "aws_s3_bucket" "images" {
   bucket = "${var.environment_name}-images-${var.aws_region}"
   acl    = "private"
 }
